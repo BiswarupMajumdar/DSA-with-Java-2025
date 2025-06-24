@@ -1,0 +1,116 @@
+📘 Problem: Valid Mountain Array
+LeetCode 941
+
+🔸 Description:
+Given an array of integers, determine if it forms a valid mountain array.
+A valid mountain array must:
+
+Have at least 3 elements
+
+Strictly increase to a single peak
+
+Then strictly decrease after the peak
+
+✅ Must include both:
+An increasing sequence
+
+A decreasing sequence
+
+📥 Input
+arr[]: Array of integers
+
+📤 Output
+true if it's a valid mountain array
+
+false otherwise
+
+🧠 Constraints:
+3 <= arr.length <= 10^4
+
+Elements are integers
+
+No flat part allowed (no equal consecutive elements)
+
+🧑‍💻 Your Solution: Java Code
+
+class Solution {
+    public boolean validMountainArray(int[] arr) {
+        int index = 0;
+        int n = arr.length;
+
+        // Step 1: Strictly increasing part
+        while(index < n - 1 && arr[index] < arr[index + 1]) {
+            index++;
+        }
+
+        // Step 2: Peak cannot be first or last
+        if(index == 0 || index == n - 1) {
+            return false;
+        }
+
+        // Step 3: Strictly decreasing part
+        while(index < n - 1 && arr[index] > arr[index + 1]) {
+            index++;
+        }
+
+        // Step 4: Ensure we reached the end
+        return (index == n - 1);
+    }
+}
+🧾 Step-by-Step Explanation
+1️⃣ Climb Up
+java
+Copy
+Edit
+while(arr[index] < arr[index + 1])
+Moves forward as long as the sequence is strictly increasing
+
+Stops at the peak
+
+2️⃣ Peak Validation
+java
+Copy
+Edit
+if(index == 0 || index == n - 1)
+Peak can't be at the beginning (only descending)
+
+Or at the end (only ascending)
+
+3️⃣ Climb Down
+java
+Copy
+Edit
+while(arr[index] > arr[index + 1])
+Moves forward if values are strictly decreasing
+
+4️⃣ Final Check
+java
+Copy
+Edit
+return (index == n - 1)
+Ensures that after climbing down, we reached the last element (complete mountain)
+
+🔍 Dry Run Example
+Input: [0, 3, 2, 1]
+Up: 0 → 3 ✅
+
+Peak at index 1 ✅
+
+Down: 3 → 2 → 1 ✅
+
+Ends at index 3 (last) ✅
+
+Returns true
+
+⏱ Time & Space Complexity
+Type	Complexity
+Time	O(n) — Each loop runs at most once
+Space	O(1) — Constant space
+
+✅ Summary
+Checkpoint	Condition
+Increasing part exists	index > 0
+Peak is not at end	index < n - 1
+Decreasing part exists	arr[index] > arr[index + 1] continues
+Fully traversed	index == n - 1
+
